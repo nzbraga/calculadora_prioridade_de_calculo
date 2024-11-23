@@ -1,7 +1,9 @@
-import priority from "./func/service/calculate.js"
+import priority from "./func/service/calculate.js";
 
-let operationInput = prompt("Qual calcule deseja fazer?")
-
-priority(operationInput)
-
-
+try {
+    let operationInput = prompt("Qual cálculo deseja fazer?");
+    
+    priority(operationInput);
+} catch (error) {
+    console.log(`Entrada: ${operationInput}, Erro: ${error}`);
+}

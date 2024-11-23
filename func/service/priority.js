@@ -5,106 +5,68 @@ import porcento from "../operacao/porcento.js"
 import soma from "../operacao/soma.js"
 import subtracao from "../operacao/subtracao.js"
 
+import executeOperation from "./executeOperation.js"
 import filtersTypePriority from "./filtersTypePriority.js"
-import makeNumber from "./makeNumbers.js"
+
 
 function priority(calc) {
 
     while (calc.length > 1) {
 
-        for (let i in calc) {
-        if (filtersTypePriority) {
+        let check = ["*", "/", "%"]
 
-            console.log('teste', calc[i])
-            let less = Number(i)
-            let plus = Number(i)
-            let result
-            
-            less = less - 1
-            plus = plus + 1
-            
-            switch (calc[i]) {
-                case '*':
-                    console.log('teste mult', calc[i])
-                    result = multiplicacao(calc[less], calc[plus])
-                    calc[less] = Number(result)
-                    calc[i] = ''
-                    calc[plus] = ''
-                    calc = (calc.join(''))
-                    calc = makeNumber(calc)
-                    break
-                    case '/':                    
-                    result = divisao(calc[less], calc[plus])
-                    calc[less] = Number(result)
-                    calc[i] = ''
-                    calc[plus] = ''
-                    calc = (calc.join(''))
-                    console.log('teste pre make div', calc)
-                    calc = makeNumber(calc)
-                    console.log('teste div', calc)
-                    break
-                case '%':
-                    result = porcento(calc[less], calc[plus])
-                    console.log("%", calc)
-                    calc[less] = Number(result)
-                    calc[i] = ''
-                    calc[plus] = ''
-                    calc = (calc.join(''))
-                    calc = makeNumber(calc)
-                    break
-            }
+        if (calc.some(e => check.includes(e))) {
+            for (let i in calc) {
+                if (filtersTypePriority) {
 
-
-        }
-
-
-
-        }     
-
-        
-        for (let i in calc) {
-            if (calc[i] === '+' || calc[i] === '-') {
-    
-                let less = Number(i)
-                let plus = Number(i)
-                let result
-    
-                less = less - 1
-                plus = plus + 1
-    
-                switch (calc[i]) {
-                    case '+':
-                        result = soma(calc[less], calc[plus])
-                        calc[less] = Number(result)
-                        calc[i] = ''
-                        calc[plus] = ''
-                        calc = (calc.join(''))
-                        calc = makeNumber(calc)
-    
-                        break
-                    case '-':
-                        result = subtracao(calc[less], calc[plus])
-                        calc[less] = Number(result)
-                        calc[i] = ''
-                        calc[plus] = ''
-                        calc = (calc.join(''))
-                        calc = makeNumber(calc)
-                        break
-    
+                    switch (calc[i]) {
+                        case '*':
+                            calc = executeOperation(calc, multiplicacao, i);
+                            break;
+                        case '/':
+                            calc = executeOperation(calc, divisao, i);
+                            break;
+                        case '%':
+                            calc = executeOperation(calc, porcento, i);
+                            break;
+                    }
                 }
-    
-    
             }
-    
-            if (calc.length === 1) {
-                console.log('calc  >>', calc)
-                let res = Number(calc)
-                console.log('res  >>', res)
+
+
+        } else {
+            for (let i in calc) {
+                if (calc[i] === '+' || calc[i] === '-') {
+
+                    let less = Number(i)
+                    let plus = Number(i)
+                    let result
+
+                    less = less - 1
+                    plus = plus + 1
+
+                    switch (calc[i]) {
+                        case '+':
+                            calc = executeOperation(calc, soma, i);
+                            break;
+                        case '-':
+                            calc = executeOperation(calc, subtracao, i);
+                            break;
+                    }
+                }
+
             }
-    
+
+
+
         }
+
+
+
+
     }
-   
+    console.log(">>>", calc)
+    return calc
 }
 
 export default priority
