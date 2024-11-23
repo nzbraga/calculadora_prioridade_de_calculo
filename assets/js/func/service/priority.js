@@ -65,8 +65,8 @@ function priority(calc) {
 
 
     }
-    console.log(">>>", calc)
-    return calc
+    //console.log(">>>", calc)
+    return calc.join()
 }
 
 export default priority

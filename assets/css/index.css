@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://www.infomoney.com.br/wp-content/uploads/2019/06/homer-simpson.jpg?w=900&quality=70&strip=all');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7); /* Fundo semitransparente para melhorar a visibilidade do conteúdo */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .operationInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .btnCalculate {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
